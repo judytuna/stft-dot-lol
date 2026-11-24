@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storefront · We Sell Storefronts</title>
+<meta name="description" content="Storefront: the only storefront that sells storefronts. Fronts only. No stores.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>">
+<style>
+  :root {
+    --ink: #1d1a17; --paper: #fff8ec; --muted: #6b6258;
+    --red: #e4463b; --teal: #1f8a83; --gold: #f2b134; --pink: #ef7fb1; --blue: #3d6fd6; --green: #4c9a4a;
+    --line: #1d1a17;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #f5ecdd; --paper: #1b1916; --muted: #b4a998; --line: #f5ecdd; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 17px/1.5 ui-rounded, "Avenir Next", "Trebuchet MS", system-ui, sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  header { border-bottom: 3px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+  .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em; text-decoration: none; }
+  .cart { font: inherit; font-weight: 700; background: none; border: 3px solid var(--line); border-radius: 999px; padding: 6px 14px; color: inherit; cursor: pointer; }
+
+  .ticker { background: var(--ink); color: var(--paper); overflow: hidden; white-space: nowrap; font-weight: 700; font-size: .9rem; }
+  .ticker span { display: inline-block; padding: 8px 0; animation: scroll 28s linear infinite; }
+  @keyframes scroll { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  @media (prefers-reduced-motion: reduce) { .ticker span { animation: none } }
+
+  .hero { padding: 48px 0 32px; display: grid; gap: 32px; grid-template-columns: 1.2fr 1fr; align-items: center; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; padding-top: 32px; } }
+  h1 { font-size: clamp(2.3rem, 7vw, 4.2rem); line-height: 1; margin: 0 0 16px; letter-spacing: -0.03em; }
+  h1 em { font-style: normal; color: var(--red); }
+  .lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 24px; max-width: 34em; }
+  .btn { display: inline-block; font: inherit; font-weight: 800; background: var(--red); color: #fff; border: 3px solid var(--line);
+    border-radius: 12px; padding: 12px 20px; cursor: pointer; box-shadow: 4px 4px 0 var(--line); text-decoration: none; }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--line); }
+
+  /* A storefront, drawn in CSS. Fronts only. */
+  .front { --c: var(--red); position: relative; aspect-ratio: 4 / 3; border: 3px solid var(--line); border-radius: 6px 6px 0 0;
+    background: var(--paper); overflow: hidden; }
+  .front .sign { position: absolute; top: 6%; left: 10%; right: 10%; height: 14%; border: 3px solid var(--line); background: var(--paper);
+    display: grid; place-items: center; font-weight: 900; font-size: clamp(.7rem, 2.2vw, 1rem); letter-spacing: .05em; text-transform: uppercase; }
+  .front .awning { position: absolute; top: 26%; left: -2%; right: -2%; height: 14%;
+    background: repeating-linear-gradient(90deg, var(--c) 0 12%, var(--paper) 12% 24%); border-block: 3px solid var(--line);
+    border-radius: 0 0 40% 40% / 0 0 30% 30%; }
+  .front .win { position: absolute; top: 46%; bottom: 0; border: 3px solid var(--line); border-bottom: 0;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--c) 22%, transparent) 0 40%, transparent 40% 55%, color-mix(in srgb, var(--c) 12%, transparent) 55%); }
+  .front .w1 { left: 8%; width: 30%; bottom: 10%; border-bottom: 3px solid var(--line); }
+  .front .w2 { right: 8%; width: 30%; bottom: 10%; border-bottom: 3px solid var(--line); }
+  .front .door { left: 42%; width: 16%; background: color-mix(in srgb, var(--c) 35%, var(--paper)); }
+  .front .door::after { content: ""; position: absolute; right: 14%; top: 50%; width: 10%; aspect-ratio: 1; border-radius: 50%; background: var(--line); }
+  .front .open { position: absolute; top: 52%; left: 13%; font-weight: 900; font-size: clamp(.55rem, 1.6vw, .8rem); color: var(--c);
+    border: 2px solid var(--c); padding: 1px 5px; border-radius: 4px; background: var(--paper); }
+  .front.big { box-shadow: 10px 10px 0 var(--line); }
+  .front::before { content: "← nothing back here →"; position: absolute; inset: auto 0 2% 0; text-align: center; font-size: .65rem; color: var(--muted); opacity: 0; transition: opacity .2s; }
+  .front:hover::before { opacity: 1; }
+
+  section h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 48px 0 8px; letter-spacing: -0.02em; }
+  section .sub { color: var(--muted); margin: 0 0 24px; }
+
+  .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .card { border: 3px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--paper); }
+  .card h3 { margin: 0; font-size: 1.15rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+  .price { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .price b { font-size: 1.3rem; }
+  .price s { color: var(--muted); font-size: .85rem; }
+  .add { font: inherit; font-weight: 800; background: var(--ink); color: var(--paper); border: 0; border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+  .badge { align-self: flex-start; font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+
+  .faq { display: grid; gap: 12px; max-width: 760px; }
+  details { border: 3px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  summary { font-weight: 800; cursor: pointer; }
+  details p { margin: 10px 0 2px; color: var(--muted); }
+
+  .reviews { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  blockquote { margin: 0; border-left: 6px solid var(--gold); padding: 8px 14px; }
+  blockquote cite { display: block; margin-top: 6px; font-style: normal; font-weight: 700; font-size: .9rem; color: var(--muted); }
+
+  footer { margin-top: 64px; border-top: 3px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(150%); background: var(--ink); color: var(--paper);
+    padding: 12px 18px; border-radius: 12px; font-weight: 700; max-width: calc(100vw - 32px); transition: transform .25s; z-index: 10; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="/">🏪 Storefront</a>
+    <button class="cart" id="cart" type="button">Cart (0 fronts)</button>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><span>
+  ★ FREE SHIPPING ON ALL FACADES ★ NOW ACCEPTING EXPOSED BRICK ★ BACKS SOLD SEPARATELY (WE DO NOT SELL BACKS) ★ ASK ABOUT OUR AWNING PAYMENT PLAN ★ FRONTS ONLY, NO STORES ★&nbsp;
+  ★ FREE SHIPPING ON ALL FACADES ★ NOW ACCEPTING EXPOSED BRICK ★ BACKS SOLD SEPARATELY (WE DO NOT SELL BACKS) ★ ASK ABOUT OUR AWNING PAYMENT PLAN ★ FRONTS ONLY, NO STORES ★&nbsp;
+</span></div>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <h1>The only storefront that sells <em>storefronts</em>.</h1>
+      <p class="lede">Why open a store when you could just open a front? Our premium facades are about 4 inches deep and 100% committed to the bit. There's nothing behind them, and there never will be.</p>
+      <button class="btn" type="button" data-msg="You are already in the store. This is the store.">Enter the store →</button>
+    </div>
+    <div class="front big" style="--c: var(--red)" aria-label="A drawing of a storefront">
+      <div class="sign">Storefront</div><div class="awning"></div>
+      <div class="win w1"></div><div class="win door"></div><div class="win w2"></div>
+      <div class="open">OPEN</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>This season's fronts</h2>
+    <p class="sub">Every front ships flat. Some assembly required. No interior included, ever.</p>
+    <div class="grid" id="products"></div>
+  </section>
+
+  <section>
+    <h2>Questions we get asked</h2>
+    <div class="faq">
+      <details><summary>What's behind the storefront?</summary><p>An alley, usually. Sometimes a different storefront facing the other way. We don't ask.</p></details>
+      <details><summary>Can I go inside?</summary><p>You can open the door. You will be outside again immediately.</p></details>
+      <details><summary>Do you sell stores?</summary><p>No. We are a storefront. If you need a store, we recommend standing behind one of our storefronts and squinting.</p></details>
+      <details><summary>What's your return policy?</summary><p>Fronts may be returned within 30 days if they are still facing forward.</p></details>
+      <details><summary>Is this a real business?</summary><p>It has a front. That's most of a business.</p></details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Happy customers</h2>
+    <div class="reviews">
+      <blockquote>“I bought the Corner Bodega front and now people keep asking me for a lighter.”<cite>★★★★★ Verified Front Owner</cite></blockquote>
+      <blockquote>“Opened the door. Was outside. Five stars, would be outside again.”<cite>★★★★★ Tasteful Loiterer</cite></blockquote>
+      <blockquote>“Ordered a storefront, received a storefront. Expected nothing, got exactly that.”<cite>★★★★☆ One star off because it was so thin</cite></blockquote>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Storefront. All fronts reserved.</span>
+    <span>No stores were harmed in the making of these fronts.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const products = [
+    { name: "The Classic Candy Shop", c: "var(--pink)", sign: "Sweets", price: "$4,200", was: "$4,199", badge: "Bestseller",
+      blurb: "Pastel awning, a window that says CANDY in a font that makes your teeth hurt. Candy not included." },
+    { name: "Retro Game Shop", c: "var(--blue)", sign: "Press Start", price: "$8,008", was: "$16,016", badge: "8-bit",
+      blurb: "A wall of cartridges, painted on. Blow on the door before opening it." },
+    { name: "Thrift Store", c: "var(--green)", sign: "Thrift", price: "$3.50", was: "$1,200", badge: "As is",
+      blurb: "Pre-loved front with a few character-building scuffs. Smells faintly like a sweater." },
+    { name: "Clothing Boutique", c: "var(--gold)", sign: "Boutique", price: "$11,000", was: "", badge: "Curated",
+      blurb: "Minimalist, matte, and judgmental. Comes with one (1) mannequin, facing the wrong way." },
+    { name: "Corner Bodega", c: "var(--red)", sign: "Deli · Grocery", price: "$2,750", was: "", badge: "Open 24h",
+      blurb: "Hand-lettered signage and a bell over the door. Cat sold separately (we do not sell cats)." },
+    { name: "Bespoke Nothing Shop", c: "var(--teal)", sign: "Nothing", price: "$0.00", was: "$0.01", badge: "Limited",
+      blurb: "A storefront for a store that sells nothing, sold by a storefront that sells storefronts. Very rare." },
+  ];
+
+  const lines = [
+    "Added to cart. Your cart is now mostly a facade.",
+    "Added! Please allow 6 to 8 weeks for nothing to arrive behind it.",
+    "In your cart, facing forward.",
+    "Added. Our warehouse is also just a front.",
+    "Added. Checkout is a storefront too, so there's no checkout.",
+  ];
+
+  const grid = document.getElementById("products");
+  const toast = document.getElementById("toast");
+  const cartBtn = document.getElementById("cart");
+  let cart = 0, timer;
+
+  function say(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(timer);
+    timer = setTimeout(() => toast.classList.remove("show"), 3200);
+  }
+
+  function frontHTML(c, sign) {
+    return `<div class="front" style="--c:${c}" aria-hidden="true"><div class="sign">${sign}</div><div class="awning"></div>
+      <div class="win w1"></div><div class="win door"></div><div class="win w2"></div><div class="open">OPEN</div></div>`;
+  }
+
+  for (const p of products) {
+    const el = document.createElement("article");
+    el.className = "card";
+    el.innerHTML = `${frontHTML(p.c, p.sign)}
+      <span class="badge">${p.badge}</span>
+      <h3>${p.name}</h3>
+      <p>${p.blurb}</p>
+      <div class="price"><b>${p.price}</b>${p.was ? `<s>was ${p.was}</s>` : ""}</div>
+      <button class="add" type="button">Add front to cart</button>`;
+    el.querySelector(".add").addEventListener("click", () => {
+      cart++;
+      cartBtn.textContent = `Cart (${cart} front${cart === 1 ? "" : "s"})`;
+      say(lines[(cart - 1) % lines.length]);
+    });
+    grid.appendChild(el);
+  }
+
+  cartBtn.addEventListener("click", () =>
+    say(cart ? `You have ${cart} front${cart === 1 ? "" : "s"}. Checkout is coming soon (it is a front).` : "Your cart is empty, which is honestly very on brand."));
+  document.querySelectorAll("[data-msg]").forEach(b => b.addEventListener("click", () => say(b.dataset.msg)));
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
